@@ -14,7 +14,7 @@ class HouseService {
       print(user);
       var SL = int.parse(number);
       for(int i = 0; i< SL; i++){
-        createRoom("Phong " + (i+1).toString(), "customer " + (i+1).toString(), onSuccess);
+        createRoom("Phong " + (i+1).toString(), "Customer " + (i+1).toString(), onSuccess);
       }
     }).catchError((err){
       onRegisterError("Create fail, please try again");
@@ -26,6 +26,7 @@ class HouseService {
     var id = Uuid();
     houseId = id.v1();
     var house = {
+      "houseID": houseId,
       "name": name,
       "address": address,
       "number": number,
@@ -51,10 +52,12 @@ class HouseService {
     var id = Uuid();
     String roomId = id.v1();
     var room = {
+      "roomId" : roomId,
       "name" : name,
       "customer": customer,
       "houseId": houseId,
-      "status" : "Trống"
+      "status" : "Trống",
+      "price" : "0"
     };
     var ref = FirebaseDatabase.instance.reference().child("room");
     ref.child(roomId).set(room).then((room){

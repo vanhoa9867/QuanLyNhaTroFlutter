@@ -28,6 +28,7 @@ class ListHouseState extends State<ListHouse>{
             data[key]['name'],
             data[key]['number'],
             data[key]['note'],
+            data[key]['houseID']
           );
           allData.add(d);
         }
@@ -60,14 +61,15 @@ class ListHouseState extends State<ListHouse>{
                   allData[index].address,
                   allData[index].number,
                   allData[index].note,
+                  allData[index].houseID,
                 );
               }),
         )
     );
   }
 
-  Widget UI(String addressHouse,String nameHouse,String numberHouse,String floorHouse){
-    HouseData newHouse = new HouseData(nameHouse, addressHouse, numberHouse, floorHouse);
+  Widget UI(String addressHouse,String nameHouse,String numberHouse,String floorHouse, String houseId){
+    HouseData newHouse = new HouseData(nameHouse, addressHouse, numberHouse, floorHouse, houseId);
     /// Item card
     return new Container(
       child: Padding
@@ -137,7 +139,7 @@ class ListHouseState extends State<ListHouse>{
                                     padding: EdgeInsets.symmetric(horizontal: 4.0),
                                     child: Text('${numberHouse.toString()}', style: TextStyle(fontWeight: FontWeight.w700)),
                                   ),
-                                  Text('(Số lầu: ${floorHouse.toString()})', style: TextStyle()),
+                                  Text('Ghi chú: ${floorHouse.toString()}', style: TextStyle()),
                                   Padding
                                     (
                                     padding: EdgeInsets.symmetric(horizontal: 4.0),
