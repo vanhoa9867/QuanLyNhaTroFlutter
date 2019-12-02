@@ -38,29 +38,6 @@ class UserInfoState extends State<UserInfo>{
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xffF4F7FA),
-        appBar: AppBar
-          (
-          elevation: 2.0,
-          backgroundColor: Colors.white,
-          title: Text('Me', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
-          /*actions: <Widget>
-          [
-            Container
-              (
-              margin: EdgeInsets.only(right: 8.0),
-              child: Row
-                (
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>
-                [
-                  Text('com.tuandiep', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 14.0)),
-                  Icon(Icons.arrow_drop_down, color: Colors.black54)
-                ],
-              ),
-            )
-          ],*/
-        ),
         body: Container(
           alignment: AlignmentDirectional.bottomCenter,
           child: ListView(

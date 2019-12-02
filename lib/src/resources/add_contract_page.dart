@@ -43,7 +43,7 @@ class _AddContractPageState extends State<AddContractPage> {
         leading: IconButton(
           color: Colors.black,
           onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
         title: Text('Tạo hợp đồng',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),

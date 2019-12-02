@@ -7,5 +7,6 @@ import 'src/blocs/Register_bloc.dart';
 void main() => runApp(MyApp(
     new RegisterBloc(),
     MaterialApp(
+      theme: ThemeData(fontFamily: 'Quicksand'),
       home: LoginPage(),
     )));

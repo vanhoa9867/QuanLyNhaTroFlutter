@@ -88,20 +88,56 @@ class _ListRoomState extends State<ListRoom> {
                 color: Colors.black,
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () => Navigator.of(context).pop()),
-            title: Text('List Room', style: TextStyle(color: Colors.black),),
+            title: Text(
+              '${widget.house.name}',
+              style: TextStyle(color: Colors.black),
+            ),
             elevation: 0,
             bottom: TabBar(
               indicatorColor: Colors.black,
               labelColor: Colors.black,
               tabs: [
                 Tab(
-                  text: ('All'),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.menu),
+                          Text('Tất cả'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Tab(
-                  text: 'Leased',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.bookmark),
+                          Text('Đã thuê'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Tab(
-                  text: 'Empty',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.bookmark_border),
+                          Text('Trống'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -109,7 +145,7 @@ class _ListRoomState extends State<ListRoom> {
           body: TabBarView(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: allData.length == 0
                     ? new Text('No data Available')
                     : new ListView.builder(
@@ -128,7 +164,7 @@ class _ListRoomState extends State<ListRoom> {
                         }),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: leasedData.length == 0
                     ? new Text('No data Available')
                     : new ListView.builder(
@@ -147,7 +183,7 @@ class _ListRoomState extends State<ListRoom> {
                         }),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: emptyData.length == 0
                     ? new Text('No data Available')
                     : new ListView.builder(
@@ -188,13 +224,13 @@ class _ListRoomState extends State<ListRoom> {
         child: Align(
           alignment: Alignment.topCenter,
           child: SizedBox.fromSize(
-              size: Size.fromHeight(172.0),
+              size: Size.fromHeight(132.0),
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
                   /// Item description inside a material
                   Container(
-                    margin: EdgeInsets.only(top: 24.0),
+                    margin: EdgeInsets.only(top: 14.0),
                     child: Material(
                       elevation: 14.0,
                       borderRadius: BorderRadius.circular(12.0),
@@ -205,7 +241,7 @@ class _ListRoomState extends State<ListRoom> {
                             MaterialPageRoute(
                                 builder: (_) => RoomInfo(newRoom))),
                         child: Padding(
-                          padding: EdgeInsets.all(24.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,

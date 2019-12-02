@@ -42,14 +42,13 @@ class ListHouseState extends State<ListHouse>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => CreateHouse())),
-          label: Text('Add'),
-          icon: Icon(Icons.add),
-          backgroundColor: Colors.green,
+          child: Icon(Icons.add),
+          backgroundColor: Colors.blue,
         ),
         body: new Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+          padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
           child: allData.length == 0 ? new Text('No data Available'):
           new ListView.builder(
               scrollDirection: Axis.vertical,
@@ -171,13 +170,14 @@ class ListHouseState extends State<ListHouse>{
                       padding: EdgeInsets.only(right: 16.0),
                       child: SizedBox.fromSize
                         (
-                        size: Size.fromRadius(54.0),
+                        size: Size.fromRadius(50.0),
                         child: Material
                           (
-                          elevation: 20.0,
+                          elevation: 16.0,
                           shadowColor: Color(0x802196F3),
                           shape: CircleBorder(),
-                          child: Image.asset('assets/images/ic_house_error.png'),
+                          child:
+                          Image.asset('assets/ic_house_thump.png'),
                         ),
                       ),
                     ),
