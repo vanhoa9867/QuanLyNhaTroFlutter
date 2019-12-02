@@ -29,8 +29,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        leading: IconButton(
+            color: Colors.black,
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.of(context).pop()),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Color(0xff327788)),
         elevation: 0,
       ),
       body: Container(
@@ -72,8 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                               labelText: "Name",
                               prefixIcon: Container(
-                                width: 50,
-                                child: Image.asset("ic_avatar.png"),
+                                child: Image.asset("ic_avatar.png", width: 0.0,),
                               ),
                               border: OutlineInputBorder(
                                   borderSide:

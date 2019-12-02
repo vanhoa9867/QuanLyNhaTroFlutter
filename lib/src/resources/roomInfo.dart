@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/model/room.dart';
+import 'package:flutter_app/src/resources/add_contract_page.dart';
 
 class RoomInfo extends StatefulWidget {
   RoomData roomData;
@@ -36,12 +37,36 @@ class _RoomInfoState extends State<RoomInfo> {
           SliverList(
               delegate: SliverChildListDelegate(<Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 25.0),
+                  padding: EdgeInsets.only(top: 10.0),
                   child: Center(
-                    child: Text('adaaa', style: TextStyle(fontSize: 20.0),),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 54.0),
+                      child: Material(
+                        elevation: 8.0,
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(32.0),
+                        child: InkWell(
+                          onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddContractPage(widget.roomData))),
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.add, color: Colors.white,),
+                                Padding(padding: EdgeInsets.only(right: 16.0)),
+                                Text('Tạo hợp đồng', style: TextStyle(color: Colors.white),)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Divider(),
+
               ])
           ),
         ],

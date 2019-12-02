@@ -83,10 +83,19 @@ class _ListRoomState extends State<ListRoom> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () => Navigator.of(context).pop()),
+            title: Text('List Room', style: TextStyle(color: Colors.black),),
+            elevation: 0,
             bottom: TabBar(
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
               tabs: [
                 Tab(
-                  text: 'All',
+                  text: ('All'),
                 ),
                 Tab(
                   text: 'Leased',
@@ -96,9 +105,6 @@ class _ListRoomState extends State<ListRoom> {
                 ),
               ],
             ),
-            title: Text('List Room'),
-            elevation: 2,
-            iconTheme: IconThemeData(),
           ),
           body: TabBarView(
             children: [

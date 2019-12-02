@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/app.dart';
+import 'package:flutter_app/src/resources/extend/buttons.dart';
+import 'package:flutter_app/src/resources/login_page.dart';
 
 class UserInfo extends StatefulWidget{
   @override
@@ -85,7 +88,7 @@ class UserInfoState extends State<UserInfo>{
                                 Text('$phone', style: TextStyle(fontSize: 24),),
                                 Text('$email', style: TextStyle(fontSize: 24),),
 
-                                /*Container(
+                                Container(
                                   padding: EdgeInsets.only(top: 20),
                                   width: 180,
                                   child: froyoOutlineBtn('Update info', (){}),
@@ -99,7 +102,7 @@ class UserInfoState extends State<UserInfo>{
                                   child: froyoFlatBtn('LogOut', () {
                                     _logOut();
                                   }),
-                                )*/
+                                )
                               ],
                             ),
                           ),
@@ -138,5 +141,13 @@ class UserInfoState extends State<UserInfo>{
         ));
   }
 
-  void _logOut() {}
+  _logOut() async{
+    await _firebaseAuth.signOut().then((value){
+      print("***** log out");
+      //Navigator.pop(context);
+      //Navigator.popUntil(context, ModalRoute.withName("/login"));
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context)=>  new LoginPage()));
+    });
+    // Navigator.popUntil(context, ModalRoute.withName("/login"));
+  }
 }

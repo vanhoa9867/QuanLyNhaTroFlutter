@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/resources/contact_page.dart';
-import 'package:flutter_app/src/resources/create_house.dart';
+import 'package:flutter_app/src/resources/dashboard_page.dart';
 import 'package:flutter_app/src/resources/home_page_2.dart';
 import 'package:flutter_app/src/resources/list_house_page.dart';
 import 'package:flutter_app/src/resources/user_info_page.dart';
@@ -23,7 +22,9 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: WillPopScope (child: _getBody(selectedBar), onWillPop: onWillPop),
+      body: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          child: WillPopScope (child: _getBody(selectedBar), onWillPop: onWillPop)),
         bottomNavigationBar: BottomNavyBar(
             onBarTap: (index){
               setState(() {
@@ -72,15 +73,13 @@ class BottomNavyBarState extends State<BottomNavyBar> {
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 270),
+      duration: Duration(milliseconds: 280),
       height: double.maxFinite,
       width: isSelected ? 125 : 50,
       padding: isSelected ? EdgeInsets.only(left: 16, right: 16) : null,
-      decoration: isSelected
-          ? BoxDecoration(
-              color: item.color,
-              borderRadius: BorderRadius.all(Radius.circular(50)))
-          : null,
+      decoration: BoxDecoration(
+              color: isSelected ?  item.color : Colors.transparent ,
+              borderRadius: BorderRadius.all(Radius.circular(50))) ,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
@@ -155,7 +154,7 @@ Widget _getBody(int index) {
     case 1:
       return ListHouse();
     case 2:
-      return Contact();
+      return DashboardPage();
     case 3:
       return UserInfo();
       break;
