@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/blocs/Register_bloc.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_app/src/resources/dialog/loading_dialog.dart';
 import 'package:flutter_app/src/resources/dialog/msg_dialog.dart';
 import 'package:flutter_app/src/resources/home_page.dart';
 import 'package:flutter_app/src/resources/login_page.dart';
+
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -17,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-
+  int _state = 0;
   @override
   void dispose(){
     authBloc.dispose();
@@ -46,11 +50,11 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 10,
               ),
-              FlutterLogo(),
+              Image.asset('assets/ic_house_planning.png',scale: 10.0,),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 6),
                 child: Text(
-                  "Welcome GC-Manage",
+                  "Welcome",
                   style: TextStyle(
                       fontSize: 22,
                       color: Color(0xff333333),
@@ -58,14 +62,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Text(
-                "Signup with GC-Manage in simple steps",
+                "Signup with E-House in simple steps",
                 style: TextStyle(
                   fontSize: 16,
                   color: Color(0xff606470),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 80, 0, 10),
+                padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
                 child: StreamBuilder(
                     stream: authBloc.FullNameStream,
                     builder: (context, snapshot) =>
@@ -75,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           decoration: InputDecoration(
                               labelText: "Name",
                               prefixIcon: Container(
-                                child: Image.asset("ic_avatar.png", width: 0.0,),
+                                child: Icon(Icons.person_outline),
                               ),
                               border: OutlineInputBorder(
                                   borderSide:
@@ -103,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Email",
                               prefixIcon: Container(
                                 width: 50,
-                                child: Image.asset("ic_envelope.png"),
+                                child: Icon(Icons.mail_outline),
                               ),
                               border: OutlineInputBorder(
                                   borderSide:
@@ -131,7 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Phone number",
                               prefixIcon: Container(
                                 width: 50,
-                                child: Image.asset("ic_phone_numbers_call.png"),
+                                child: Icon(Icons.phone),
                               ),
                               border: OutlineInputBorder(
                                   borderSide:
@@ -160,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               labelText: "Password",
                               prefixIcon: Container(
                                 width: 50,
-                                child: Image.asset("ic_lock.png"),
+                                child: Icon(Icons.lock_outline),
                               ),
                               border: OutlineInputBorder(
                                   borderSide:
@@ -181,12 +185,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 52,
-                  child: RaisedButton(
+                  child: MaterialButton(
                     onPressed: _onSignUpClicked,
-                    child: Text(
-                      "SIGNUP",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
+                    child: setUpButtonChild(),
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6))),
@@ -222,15 +223,51 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _onSignUpClicked() {
+    setState(() {
+      if (_state == 0) {
+        animateButton();
+      }
+    });
+  }
+  Widget setUpButtonChild() {
+    if (_state == 0) {
+      return new Text(
+        "SIGN UP",
+        style: const TextStyle(
+          color: Colors.white,
+        ),
+      );
+    } else if (_state == 1) {
+      return new CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      );
+    } else if( _state == 2) {
+      return new Icon(Icons.check, color: Colors.white);
+    }
+  }
+  void animateButton() {
+    setState(() {
+      _state = 1;
+    });
     var isValid = authBloc.isValid(_fullnameController.text,_emailController.text,_phoneController.text,_passwordController.text);
-    if (isValid){
-      LoadingDialog.showLoadingDialog(context, 'Loading...');
-      authBloc.signUp(_emailController.text, _passwordController.text,_fullnameController.text,_phoneController.text, (){
-        LoadingDialog.hideLoadingDialog(context);
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
-      },(msg){
-        LoadingDialog.hideLoadingDialog(context);
-        MsgDialog.showMsgDialog(context, "Sign-In", msg);
+    if(isValid){
+      Timer(Duration(milliseconds: 2300), () {
+        authBloc.signUp(_emailController.text, _passwordController.text,_fullnameController.text,_phoneController.text, (){
+          setState(() {
+            _state = 2;
+          });
+          //Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterPage()));
+        },(msg){
+          setState(() {
+            _state = 0;
+          });
+          MsgDialog.showMsgDialog(context, "Sign-up", msg);
+        });
+      });
+    }
+    else{
+      setState(() {
+        _state = 0;
       });
     }
   }

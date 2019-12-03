@@ -1,23 +1,40 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/resources/dashboard_page.dart';
 import 'package:flutter_app/src/resources/home_page_2.dart';
+import 'package:flutter_app/src/resources/introduce/app_introduce.dart';
 import 'package:flutter_app/src/resources/list_house_page.dart';
 import 'package:flutter_app/src/resources/user_info_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return HomePageState();
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> {
+  Future checkFirstSeen() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (!_seen){
+      prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new IntroScreen()));
+    }
+  }
   DateTime currentBackPressTime;
   int selectedBar =0;
+  @override
+  void initState() {
+    super.initState();
+    new Timer(new Duration(milliseconds: 200), () {
+      checkFirstSeen();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
