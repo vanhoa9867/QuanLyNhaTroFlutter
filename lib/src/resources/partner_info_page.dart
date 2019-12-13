@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/model/partner.dart';
+import 'package:flutter_app/src/resources/call_message_page.dart';
 import 'package:flutter_app/src/resources/dialog/alert_delete_dialog.dart';
+import 'package:flutter_app/src/resources/service_locator.dart';
 
 class PartnerInfo extends StatefulWidget {
   PartnerData partnerData;
@@ -14,6 +16,7 @@ class PartnerInfo extends StatefulWidget {
 class _PartnerInfoState extends State<PartnerInfo> {
   /*final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();*/
   var _height, _width;
+  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                                   width: _width / 2,
                                   height: _height / 12,
                                 ),
-                                onTap: null,
+                                onTap:() => _service.call(widget.partnerData.phonenumber),
                               ),
                               _buildTile(
                                 new Container(
@@ -139,7 +142,7 @@ class _PartnerInfoState extends State<PartnerInfo> {
                                   width: _width / 2,
                                   height: _height / 12,
                                 ),
-                                onTap: null,
+                                onTap: () => _service.sendSms(widget.partnerData.phonenumber),
                               ),
                             ]),
                         padding: const EdgeInsets.all(0.0),
