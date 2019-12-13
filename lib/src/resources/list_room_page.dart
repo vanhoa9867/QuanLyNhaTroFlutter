@@ -237,7 +237,7 @@ class _ListRoomState extends State<ListRoom> {
                             MaterialPageRoute(
                                 builder: (_) => RoomInfo(newRoom))),
                         child: Padding(
-                          padding: EdgeInsets.all(24.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -9,6 +9,7 @@ import 'package:flutter_app/src/resources/list_contract_page.dart';
 import 'package:flutter_app/src/resources/list_partner_page.dart';
 import 'package:flutter_app/src/resources/update_roominfor.dart';
 
+
 class RoomInfo extends StatefulWidget {
   RoomData roomData;
   RoomInfo(this.roomData, {Key key}) : super(key: key);
