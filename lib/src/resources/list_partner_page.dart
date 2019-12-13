@@ -5,6 +5,7 @@ import 'package:flutter_app/src/model/partner.dart';
 import 'package:flutter_app/src/model/room.dart';
 import 'package:flutter_app/src/resources/add_partner_page.dart';
 import 'package:flutter_app/src/resources/create_house.dart';
+import 'package:flutter_app/src/resources/partner_info_page.dart';
 
 class ListPartner extends StatefulWidget {
   RoomData roomData;
@@ -120,7 +121,7 @@ class ListPartnerState extends State<ListPartner>{
                       shadowColor: Color(0x802196F3),
                       color: Colors.white,
                       child: InkWell(
-                        onTap: null /*()=>Navigator.of(context).push(MaterialPageRoute(builder: (_) => ListRoom(newPartner)))*/,
+                        onTap:  ()=>Navigator.of(context).push(MaterialPageRoute(builder: (_) => PartnerInfo(newPartner))),
                         child: Padding
                           (
                           padding: EdgeInsets.all(24.0),
