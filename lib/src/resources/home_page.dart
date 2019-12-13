@@ -83,16 +83,17 @@ class BottomNavyBarState extends State<BottomNavyBar> {
 
   List<NavigationItem> items = [
     NavigationItem(Icon(Icons.home), Text('Home'), Colors.blue),
-    NavigationItem(Icon(Icons.account_balance), Text('List House'), Colors.blue),
-    NavigationItem(Icon(Icons.contacts), Text('Contacts'), Colors.blue),
-    NavigationItem(Icon(Icons.account_circle), Text('Information'), Colors.blue),
+    NavigationItem(Icon(Icons.whatshot), Text('House'), Colors.blue),
+    NavigationItem(Icon(Icons.dashboard), Text('Board'), Colors.blue),
+    NavigationItem(Icon(Icons.person), Text('Infor'), Colors.blue),
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 280),
+      duration: Duration(milliseconds: 330),
+      curve: Curves.ease,
       height: double.maxFinite,
-      width: isSelected ? 125 : 50,
+      width: isSelected ? 120 : 50,
       padding: isSelected ? EdgeInsets.only(left: 16, right: 16) : null,
       decoration: BoxDecoration(
               color: isSelected ?  item.color : Colors.transparent ,

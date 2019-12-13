@@ -7,12 +7,13 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp(
       new RegisterBloc(),
-      MaterialApp(
+    new MaterialApp(
         theme: ThemeData(
-            primaryColor: Colors.red, accentColor: Colors.yellowAccent),
+            primaryColor: Colors.lightBlue, accentColor: Colors.blueAccent),
         debugShowCheckedModeBanner: false,
         home: new SplashScreen(),
-      )));
+    ),
+  ));
 }
 
 

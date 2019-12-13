@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import 'package:intl/intl.dart';
 
 class AddContractPage extends StatefulWidget {
   RoomData roomData;
-
   AddContractPage(this.roomData, {Key key}) : super(key: key);
 
   @override
@@ -20,6 +20,8 @@ class AddContractPage extends StatefulWidget {
 }
 
 class _AddContractPageState extends State<AddContractPage> {
+  final format = DateFormat("dd-MM-yyyy");
+
   CreateContractBloc bloc = new CreateContractBloc();
   TextEditingController _NgayVaoController = new TextEditingController();
   TextEditingController _ThoiHanController = new TextEditingController();
@@ -29,11 +31,24 @@ class _AddContractPageState extends State<AddContractPage> {
   TextEditingController _NgayThuTenController = new TextEditingController();
   TextEditingController _TenPartnerController = new TextEditingController();
   TextEditingController _phoneNumberController = new TextEditingController();
+  TextEditingController _emailPartnerController = new TextEditingController();
+  TextEditingController _CMNDpartnerController = new TextEditingController();
+  TextEditingController _birthdayPartnerController = new TextEditingController();
+  TextEditingController _addressPartnerController = new TextEditingController();
+
+  get refreshRoomData => null;
+
+  @override
+  void initState() {
+    _NgayVaoController.text = format.format(DateTime.now()).toString();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat("dd-MM-yyyy");
+
     var now = new DateTime.now();
+    var nowformated = format.format(now);
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -42,8 +57,10 @@ class _AddContractPageState extends State<AddContractPage> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
         title: Text('Tạo hợp đồng',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
@@ -60,7 +77,10 @@ class _AddContractPageState extends State<AddContractPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                 alignment: Alignment.center,
-                child: Text('THÔNG TIN HỢP ĐỒNG', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),),
+                child: Text(
+                  'THÔNG TIN HỢP ĐỒNG',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -70,11 +90,15 @@ class _AddContractPageState extends State<AddContractPage> {
                           //controller: _nameHouseController,
                           style: TextStyle(fontSize: 18, color: Colors.black),
                           decoration: InputDecoration(
-                              labelText: "Mã tham chiếu(Nhập mã nếu có)",
-                              errorText:
-                                  snapshot.hasError ? snapshot.error : null,
-                              labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                            labelText: "Mã tham chiếu(Nhập mã nếu có)",
+                            errorText:
+                                snapshot.hasError ? snapshot.error : null,
+                            labelStyle: TextStyle(
+                                color: Color(0xff888888), fontSize: 14),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),),
+                          ),
                         )),
               ),
               Padding(
@@ -94,12 +118,15 @@ class _AddContractPageState extends State<AddContractPage> {
                             lastDate: DateTime(2025));
                       },
                       decoration: InputDecoration(
-                          labelText: now.toString(),
-                          helperText: "Ngày tạo hợp đồng",
+                          labelText: "Ngày tạo hợp đồng",hintStyle: TextStyle(color: Color(0xff888888), fontSize: 14) ,
                           errorText: snapshot.hasError ? snapshot.error : null,
                           labelStyle:
                               TextStyle(color: Color(0xff888888), fontSize: 12),
-                          icon: Icon(Icons.date_range)),
+                          icon: Icon(Icons.date_range),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color(0xffCED0D2), width: 1),),),
+
                     ),
                   ),
                 ),
@@ -121,12 +148,14 @@ class _AddContractPageState extends State<AddContractPage> {
                             lastDate: DateTime(2025));
                       },
                       decoration: InputDecoration(
-                          labelText: now.toString(),
-                          helperText: "Thời hạn hợp đồng",
+                          labelText: "Thời hạn hợp đồng",hintStyle: TextStyle(color: Color(0xff888888), fontSize: 14) ,
                           errorText: snapshot.hasError ? snapshot.error : null,
                           labelStyle:
                               TextStyle(color: Color(0xff888888), fontSize: 12),
-                          icon: Icon(Icons.date_range)),
+                          icon: Icon(Icons.date_range),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xffCED0D2), width: 1),)),
                     ),
                   ),
                 ),
@@ -145,7 +174,10 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Padding(
@@ -160,7 +192,10 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Padding(
@@ -175,7 +210,10 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Padding(
@@ -190,13 +228,19 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 15),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 25),
                 alignment: Alignment.center,
-                child: Text('THÔNG TIN KHÁCH HÀNG', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),),
+                child: Text(
+                  'THÔNG TIN KHÁCH HÀNG',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -210,7 +254,10 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Padding(
@@ -225,68 +272,83 @@ class _AddContractPageState extends State<AddContractPage> {
                               errorText:
                                   snapshot.hasError ? snapshot.error : null,
                               labelStyle: TextStyle(
-                                  color: Color(0xff888888), fontSize: 12)),
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
                         )),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: StreamBuilder(
-                    //stream: bloc.phoneNumberStream,
+                    stream: bloc.emailPartnerStream,
                     builder: (context, snapshot) => TextField(
-                      //controller: _phoneNumberController,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      decoration: InputDecoration(
-                          labelText: "Email",
-                          errorText:
-                          snapshot.hasError ? snapshot.error : null,
-                          labelStyle: TextStyle(
-                              color: Color(0xff888888), fontSize: 12)),
-                    )),
+                          controller: _emailPartnerController,
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Email",
+                              errorText:
+                                  snapshot.hasError ? snapshot.error : null,
+                              labelStyle: TextStyle(
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
+                        )),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: StreamBuilder(
-                    //stream: bloc.phoneNumberStream,
+                    stream: bloc.birthDayPartnerStream,
                     builder: (context, snapshot) => TextField(
-                      //controller: _phoneNumberController,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      decoration: InputDecoration(
-                          labelText: "Ngày sinh (*)",
-                          errorText:
-                          snapshot.hasError ? snapshot.error : null,
-                          labelStyle: TextStyle(
-                              color: Color(0xff888888), fontSize: 12)),
-                    )),
+                          controller: _birthdayPartnerController,
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Ngày sinh (*)",
+                              errorText:
+                                  snapshot.hasError ? snapshot.error : null,
+                              labelStyle: TextStyle(
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
+                        )),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: StreamBuilder(
-                    //stream: bloc.phoneNumberStream,
+                    stream: bloc.CMNDpartnerStream,
                     builder: (context, snapshot) => TextField(
-                      //controller: _phoneNumberController,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      decoration: InputDecoration(
-                          labelText: "Số căn cước (*)",
-                          errorText:
-                          snapshot.hasError ? snapshot.error : null,
-                          labelStyle: TextStyle(
-                              color: Color(0xff888888), fontSize: 12)),
-                    )),
+                          controller: _CMNDpartnerController,
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Số căn cước (*)",
+                              errorText:
+                                  snapshot.hasError ? snapshot.error : null,
+                              labelStyle: TextStyle(
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
+                        )),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: StreamBuilder(
-                    //stream: bloc.phoneNumberStream,
+                    stream: bloc.addressPartnerStream,
                     builder: (context, snapshot) => TextField(
-                      //controller: _phoneNumberController,
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      decoration: InputDecoration(
-                          labelText: "Nguyên quán (*)",
-                          errorText:
-                          snapshot.hasError ? snapshot.error : null,
-                          labelStyle: TextStyle(
-                              color: Color(0xff888888), fontSize: 12)),
-                    )),
+                          controller: _addressPartnerController,
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          decoration: InputDecoration(
+                              labelText: "Nguyên quán (*)",
+                              errorText:
+                                  snapshot.hasError ? snapshot.error : null,
+                              labelStyle: TextStyle(
+                                  color: Color(0xff888888), fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xffCED0D2), width: 1),)),
+                        )),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
@@ -324,6 +386,7 @@ class _AddContractPageState extends State<AddContractPage> {
         MsgDialog.showMsgDialog(context, "Create contract fail", msg);
       });
     }*/
+    LoadingDialog.showLoadingDialog(context, "Loading...");
     bloc.createContract(
         _NgayVaoController.text,
         _ThoiHanController.text,
@@ -333,12 +396,17 @@ class _AddContractPageState extends State<AddContractPage> {
         _NgayThuTenController.text,
         widget.roomData.roomId,
         _TenPartnerController.text,
-        _phoneNumberController.text, () {
+        _phoneNumberController.text,
+        _emailPartnerController.text,
+        _birthdayPartnerController.text,
+        _CMNDpartnerController.text,
+        _addressPartnerController.text, () {
       LoadingDialog.hideLoadingDialog(context);
-      Navigator.of(context).pop();
+      MsgDialog.showMsgDialog(context, "Create contract", 'Tạo thành công');
     }, (msg) {
       LoadingDialog.hideLoadingDialog(context);
-      MsgDialog.showMsgDialog(context, "Create contract fail", msg);
+      MsgDialog.showMsgDialog(context, "Create contract", msg);
     });
   }
 }
+

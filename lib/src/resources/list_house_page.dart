@@ -42,15 +42,14 @@ class ListHouseState extends State<ListHouse>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => CreateHouse())),
-          label: Text('Add'),
-          icon: Icon(Icons.add),
-          backgroundColor: Colors.green,
+          child: Icon(Icons.add,color: Colors.white),
+          backgroundColor: Colors.blue,
         ),
         body: new Container(
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
-          child: allData.length == 0 ? new Text('No data Available'):
+          padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
+          child: allData.length == 0 ? UIempty():
           new ListView.builder(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.symmetric(horizontal: 14.0),
@@ -92,7 +91,7 @@ class ListHouseState extends State<ListHouse>{
                     margin: EdgeInsets.only(top: 24.0),
                     child: Material
                       (
-                      elevation: 14.0,
+                      elevation: 5.0,
                       borderRadius: BorderRadius.circular(12.0),
                       shadowColor: Color(0x802196F3),
                       color: Colors.white,
@@ -168,16 +167,16 @@ class ListHouseState extends State<ListHouse>{
                     alignment: Alignment.topRight,
                     child: Padding
                       (
-                      padding: EdgeInsets.only(right: 16.0),
+                      padding: EdgeInsets.only(right: 12.0),
                       child: SizedBox.fromSize
                         (
-                        size: Size.fromRadius(54.0),
+                        size: Size.fromRadius(44.0),
                         child: Material
                           (
-                          elevation: 20.0,
+                          elevation: 4.0,
                           shadowColor: Color(0x802196F3),
                           shape: CircleBorder(),
-                          child: Image.asset('assets/images/ic_house_error.png'),
+                          child: Image.asset('assets/ic_house_organization.png',scale: 9.0,),
                         ),
                       ),
                     ),
@@ -187,6 +186,17 @@ class ListHouseState extends State<ListHouse>{
           ),
         ),
       ),
+    );
+  }
+
+  Widget UIempty(){
+    return new Container(
+      alignment: Alignment.center,
+      child: new Stack(
+        children: <Widget>[
+          Image.asset('assets/ic_house_increase.png',scale: 5.0,),
+        ],
+      )
     );
   }
 }

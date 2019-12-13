@@ -18,29 +18,47 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
     slides.add(
       new Slide(
-        title: "ERASER",
+        title: "HỆ THỐNG RIÊNG",
         description:
-            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-        pathImage: "assets/ic_house_location.png",
-        backgroundColor: Color(0xfff5a623),
+            "Bạn có thể tự tạo ra một hệ thống phòng trọ tùy theo nhu cầu của mình!",
+        pathImage: "assets/ic_house_network.png",
+        backgroundColor: Colors.blueAccent,
       ),
     );
     slides.add(
       new Slide(
-        title: "PENCIL",
+        title: "TƯƠNG TÁC\nVỚI KHÁCH HÀNG",
         description:
-            "Ye indulgence unreserved connection alteration appearance",
-        pathImage: "assets/ic_house_planning.png",
+            "Có hệ thống tương tác với khách hàng tiện dụng, việc thông báo, liên hệ trở nên dễ dàng!",
+        pathImage: "assets/ic_customer_service.png",
         backgroundColor: Color(0xff203152),
       ),
     );
     slides.add(
       new Slide(
-        title: "RULER",
+        title: "DỊCH VỤ\nKÈM THEO ĐẦY ĐỦ",
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        pathImage: "assets/ic_house_planning.png",
+        "Có những dịch vụ khi khách hàng ở trọ\n làm tăng tính tiện ích hệ thống của bạn!",
+        pathImage: "assets/ic_house_invest.png",
+        backgroundColor: Colors.red,
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "THỐNG KÊ",
+        description:
+            "Việc thống kê tự động giúp bạn \ndễ dàng kiểm tra tình trạng của toàn hệ thống thời gian thực.",
+        pathImage: "assets/ic_house_graph.png",
         backgroundColor: Color(0xff9932CC),
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "BẮT ĐẦU NGAY",
+        description:
+        "Còn chờ gì nữa \nbắt đầu trải nghiệm ứng dụng nào!",
+        pathImage: "assets/ic_balloons.png",
+        backgroundColor: Colors.deepOrangeAccent,
       ),
     );
   }

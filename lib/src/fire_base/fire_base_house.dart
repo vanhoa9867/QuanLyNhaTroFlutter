@@ -42,13 +42,13 @@ class HouseService {
   }
 
   void createRoom(String name, String customer,Function onSuccess){
-    _firebaseAuth.currentUser().then((house){
-      _createRoom(name, customer,houseId , onSuccess);
-      print(house);
+    _firebaseAuth.currentUser().then((user){
+      _createRoom(name, customer,houseId, user.uid, onSuccess);
+      print(user);
     });
   }
 
-  _createRoom(String name, String customer,String houseId, Function onSuccess){
+  _createRoom(String name, String customer,String houseId,String user_id, Function onSuccess){
     var id = Uuid();
     String roomId = id.v1();
     var room = {
@@ -57,14 +57,25 @@ class HouseService {
       "customer": customer,
       "houseId": houseId,
       "status" : "Trống",
-      "price" : "0"
+      "price" : '1500000'
     };
     var ref = FirebaseDatabase.instance.reference().child("room");
-    ref.child(roomId).set(room).then((room){
+    ref.child(user_id).child(roomId).set(room).then((room){
       onSuccess();
     });
   }
 
-
-
+  void updateRoom(String name,String price,String roomId, Function onSuccess){
+    _firebaseAuth.currentUser().then((user){
+      _updateRoom(name,price,roomId,user.uid,onSuccess);
+      print(user);
+    });
+  }
+  _updateRoom(String name,String price,String roomId,String user_id, Function onSuccess){
+    var ref = FirebaseDatabase.instance.reference().child("room");
+    ref.child(user_id).child(roomId).update({
+      'name': name,
+      'price': price,
+    });
+  }
 }

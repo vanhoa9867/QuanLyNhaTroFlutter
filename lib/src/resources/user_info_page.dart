@@ -38,29 +38,6 @@ class UserInfoState extends State<UserInfo>{
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xffF4F7FA),
-        appBar: AppBar
-          (
-          elevation: 2.0,
-          backgroundColor: Colors.white,
-          title: Text('Me', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 30.0)),
-          /*actions: <Widget>
-          [
-            Container
-              (
-              margin: EdgeInsets.only(right: 8.0),
-              child: Row
-                (
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>
-                [
-                  Text('com.tuandiep', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w700, fontSize: 14.0)),
-                  Icon(Icons.arrow_drop_down, color: Colors.black54)
-                ],
-              ),
-            )
-          ],*/
-        ),
         body: Container(
           alignment: AlignmentDirectional.bottomCenter,
           child: ListView(
@@ -86,7 +63,6 @@ class UserInfoState extends State<UserInfo>{
                                 Text('Welcome!', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
                                 Text('$name', style: TextStyle(fontSize: 24),),
                                 Text('$phone', style: TextStyle(fontSize: 24),),
-                                Text('$email', style: TextStyle(fontSize: 24),),
 
                                 Container(
                                   padding: EdgeInsets.only(top: 20),
@@ -120,16 +96,16 @@ class UserInfoState extends State<UserInfo>{
                       Align(
                           alignment: Alignment.center,
                           child: SizedBox(
-                            width: 200,
-                            height: 160,
+                            width: 120,
+                            height: 120,
                             child: Container(
                               padding: EdgeInsets.all(15),
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Color(0xdfd8d8d8)
+                                  shape: BoxShape.circle, color: Color(0xffffffff)
                               ),
                               child: Container(
                                   padding: EdgeInsets.all(15),
-                                  child: Image.asset("ic_user_avartar_error.png")),
+                                  child: Image.asset("assets/ic_profile.png",scale: 9.0,)),
                             ),
                           )
                       )],

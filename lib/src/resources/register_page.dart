@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/blocs/Register_bloc.dart';
-import 'package:flutter_app/src/resources/dialog/loading_dialog.dart';
 import 'package:flutter_app/src/resources/dialog/msg_dialog.dart';
-import 'package:flutter_app/src/resources/home_page.dart';
 import 'package:flutter_app/src/resources/login_page.dart';
 
 import 'login_page.dart';
@@ -152,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 60),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                 child: StreamBuilder(
                     stream: authBloc.PassStream,
                     builder: (context, snapshot) =>
@@ -195,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 40),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 40),
                 child: RichText(
                   text: TextSpan(
                       text: "Already a User? ",

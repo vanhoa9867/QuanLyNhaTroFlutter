@@ -226,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
     });
     var isvalid = bloc.isValidInfo(_userController.text, _passController.text);
     if(isvalid){
-      Timer(Duration(milliseconds: 2300), () {
+      Timer(Duration(milliseconds: 200), () {
         authBloc.signIn(email, pass, () {
           setState(() {
             _state = 2;

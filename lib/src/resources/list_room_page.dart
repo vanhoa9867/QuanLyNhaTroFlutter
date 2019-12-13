@@ -3,11 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/model/house.dart';
 import 'package:flutter_app/src/model/room.dart';
+import 'package:flutter_app/src/resources/dialog/alert_delete_dialog.dart';
 import 'package:flutter_app/src/resources/roomInfo.dart';
 
 class ListRoom extends StatefulWidget {
   HouseData house;
-
   ListRoom(this.house, {Key key}) : super(key: key);
 
   @override
@@ -15,15 +15,17 @@ class ListRoom extends StatefulWidget {
 }
 
 class _ListRoomState extends State<ListRoom> {
-  List<RoomData> allData = [];
-  List<RoomData> emptyData = [];
-  List<RoomData> leasedData = [];
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
+  final List<RoomData> allData = [];
+  final List<RoomData> emptyData = [];
+  final List<RoomData> leasedData = [];
 
   @override
   void initState() {
     DatabaseReference ref = FirebaseDatabase.instance.reference();
     FirebaseAuth.instance.currentUser().then((user) {
-      ref.child('room').once().then((DataSnapshot snap) {
+      ref.child('room').child(user.uid).once().then((DataSnapshot snap) {
         var keys = snap.value.keys;
         var data = snap.value;
         for (var key in keys) {
@@ -74,6 +76,7 @@ class _ListRoomState extends State<ListRoom> {
         });
       });
     });
+    super.initState();
   }
 
   @override
@@ -88,20 +91,37 @@ class _ListRoomState extends State<ListRoom> {
                 color: Colors.black,
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () => Navigator.of(context).pop()),
-            title: Text('List Room', style: TextStyle(color: Colors.black),),
-            elevation: 0,
+            title: Text('${widget.house.name}', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+            centerTitle: true,
+            elevation: 1.0,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  print('do delete house method');
+                  AlertDeleteDialog.showMsgDialog(
+                      context, 'XÓA BỎ', 'Bạn có chắc muốn xóa bỏ nhà trọ này!');
+                },
+              ),
+            ],
             bottom: TabBar(
               indicatorColor: Colors.black,
               labelColor: Colors.black,
               tabs: [
                 Tab(
+                  icon: Icon(Icons.whatshot),
                   text: ('All'),
                 ),
                 Tab(
-                  text: 'Leased',
+                  icon: Icon(Icons.hourglass_full),
+                  text: 'Đã thuê',
                 ),
                 Tab(
-                  text: 'Empty',
+                  icon: Icon(Icons.hourglass_empty),
+                  text: 'Trống',
                 ),
               ],
             ),
@@ -109,61 +129,73 @@ class _ListRoomState extends State<ListRoom> {
           body: TabBarView(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
                 child: allData.length == 0
                     ? new Text('No data Available')
-                    : new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.symmetric(horizontal: 14.0),
-                        itemCount: allData.length,
-                        itemBuilder: (_, index) {
-                          return UI(
-                            allData[index].name,
-                            allData[index].customer,
-                            allData[index].price,
-                            allData[index].status,
-                            allData[index].roomId,
-                            allData[index].houseId,
-                          );
-                        }),
+                    : RefreshIndicator(
+                      key:_refreshIndicatorKey,
+                      onRefresh: _refresh,
+                      child: new ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          padding: EdgeInsets.symmetric(horizontal: 14.0),
+                          itemCount: allData.length,
+                          itemBuilder: (_, index) {
+                            return UI(
+                              allData[index].customer,
+                              allData[index].name,
+                              allData[index].price,
+                              allData[index].status,
+                              allData[index].roomId,
+                              allData[index].houseId,
+                            );
+                          }),
+                    ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
                 child: leasedData.length == 0
                     ? new Text('No data Available')
-                    : new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.symmetric(horizontal: 14.0),
-                        itemCount: leasedData.length,
-                        itemBuilder: (_, index) {
-                          return UI(
-                            leasedData[index].name,
-                            leasedData[index].customer,
-                            leasedData[index].price,
-                            leasedData[index].status,
-                            leasedData[index].roomId,
-                            leasedData[index].houseId,
-                          );
-                        }),
+                    : RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      onRefresh: _refresh,
+                      child: new ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          padding: EdgeInsets.symmetric(horizontal: 14.0),
+                          itemCount: leasedData.length,
+                          itemBuilder: (_, index) {
+                            return UI(
+                              leasedData[index].customer,
+                              leasedData[index].name,
+                              leasedData[index].price,
+                              leasedData[index].status,
+                              leasedData[index].roomId,
+                              leasedData[index].houseId,
+                            );
+                          }),
+                    ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
                 child: emptyData.length == 0
                     ? new Text('No data Available')
-                    : new ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.symmetric(horizontal: 14.0),
-                        itemCount: emptyData.length,
-                        itemBuilder: (_, index) {
-                          return UI(
-                            emptyData[index].name,
-                            emptyData[index].customer,
-                            emptyData[index].price,
-                            emptyData[index].status,
-                            emptyData[index].roomId,
-                            emptyData[index].houseId,
-                          );
-                        }),
+                    : RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      onRefresh: _refresh,
+                      child: new ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          padding: EdgeInsets.symmetric(horizontal: 14.0),
+                          itemCount: emptyData.length,
+                          itemBuilder: (_, index) {
+                            return UI(
+                              emptyData[index].customer,
+                              emptyData[index].name,
+                              emptyData[index].price,
+                              emptyData[index].status,
+                              emptyData[index].roomId,
+                              emptyData[index].houseId,
+                            );
+                          }),
+                    ),
               ),
             ],
           ),
@@ -175,7 +207,7 @@ class _ListRoomState extends State<ListRoom> {
   Widget UI(String customer, String nameRoom, String priceRoom, String status,
       String roomId, String houseId) {
     RoomData newRoom =
-        new RoomData(nameRoom, customer, priceRoom, status, roomId, houseId);
+        new RoomData(customer,nameRoom, priceRoom, status, roomId, houseId);
     bool setColor = true;
     if (status.toString() == 'Đã thuê') {
       setColor = false;
@@ -188,15 +220,15 @@ class _ListRoomState extends State<ListRoom> {
         child: Align(
           alignment: Alignment.topCenter,
           child: SizedBox.fromSize(
-              size: Size.fromHeight(172.0),
+              size: Size.fromHeight(132.0),
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
                   /// Item description inside a material
                   Container(
-                    margin: EdgeInsets.only(top: 24.0),
+                    margin: EdgeInsets.only(top: 2.0),
                     child: Material(
-                      elevation: 14.0,
+                      elevation: 5.0,
                       borderRadius: BorderRadius.circular(12.0),
                       shadowColor: Color(0x802196F3),
                       color: Colors.white,
@@ -305,5 +337,20 @@ class _ListRoomState extends State<ListRoom> {
       return true;
     }
     return false;
+  }
+  Future<Null> _refresh() async {
+    //Holding pull to refresh loader widget for 2 sec.
+    //You can fetch data from server.
+    //clear list data
+    allData.clear();
+    emptyData.clear();
+    leasedData.clear();
+    await new Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      //insert new list data
+      initState();
+      print('refresh list room data complete.');
+    });
+    return null;
   }
 }

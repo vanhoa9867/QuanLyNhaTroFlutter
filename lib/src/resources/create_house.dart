@@ -23,13 +23,20 @@ class _CreateHouseState extends State<CreateHouse> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text('Create House', style: TextStyle(color: Colors.black),),
-        elevation: 0,
+        elevation: 1,
+        title: new Text('Tạo mới nhà trọ',style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
+        centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         constraints: BoxConstraints.expand(),
         color: Colors.white,
         child: SingleChildScrollView(
@@ -44,9 +51,12 @@ class _CreateHouseState extends State<CreateHouse> {
                       controller: _nameHouseController,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       decoration: InputDecoration(
-                        labelText: 'Name house',
-                        labelStyle: TextStyle(color: Color(0xff888888),fontSize: 20),
-                          errorText: snapshot.hasError ? snapshot.error : null
+                        labelText: 'Tên nhà trọ',
+                        labelStyle: TextStyle(color: Color(0xff888888),fontSize: 18),
+                          errorText: snapshot.hasError ? snapshot.error : null,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xffCED0D2), width: 1),)
                       ),
                     );
                   }
@@ -61,9 +71,12 @@ class _CreateHouseState extends State<CreateHouse> {
                       controller: _addressHouseController,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       decoration: InputDecoration(
-                          labelText: 'Address',
-                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 20),
+                          labelText: 'Địa chỉ',
+                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 18),
                           errorText: snapshot.hasError ? snapshot.error : null,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xffCED0D2), width: 1),)
                       ),
                     );
                   }
@@ -79,8 +92,11 @@ class _CreateHouseState extends State<CreateHouse> {
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       decoration: InputDecoration(
                           labelText: 'Số lượng phòng',
-                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 20),
+                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 18),
                           errorText: snapshot.hasError ? snapshot.error : null,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xffCED0D2), width: 1),)
                       ),
                     );
                   }
@@ -95,9 +111,12 @@ class _CreateHouseState extends State<CreateHouse> {
                       controller: _noteHouseController,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       decoration: InputDecoration(
-                          labelText: 'Note',
-                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 20),
+                          labelText: 'Miêu tả',
+                          labelStyle: TextStyle(color: Color(0xff888888),fontSize: 18),
                           errorText: snapshot.hasError ? snapshot.error : null,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xffCED0D2), width: 1),)
                       ),
                     );
                   }
@@ -111,7 +130,7 @@ class _CreateHouseState extends State<CreateHouse> {
                   child: RaisedButton(
                     onPressed: _onCreateHouseClicked,
                     child: Text(
-                      "CREATE",
+                      "HOÀN THÀNH",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     color: Colors.blue,

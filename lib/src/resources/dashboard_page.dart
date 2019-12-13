@@ -131,7 +131,7 @@ class _DashboardPageState extends State<DashboardPage>{
                             child: Padding
                               (
                               padding: const EdgeInsets.all(16.0),
-                              child: Text('0', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 30.0)),
+                              child: Text('2', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 30.0)),
                             )
                         ),
                         Padding(padding: EdgeInsets.only(bottom: 16.0)),
@@ -158,7 +158,7 @@ class _DashboardPageState extends State<DashboardPage>{
                             child: Padding
                               (
                               padding: EdgeInsets.all(16.0),
-                              child: Text('0', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 30.0)),
+                              child: Text('4', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 30.0)),
                             )
                         ),
                         Padding(padding: EdgeInsets.only(bottom: 16.0)),
@@ -317,7 +317,7 @@ class _DashboardPageState extends State<DashboardPage>{
 
   Widget _buildTile(Widget child, {Function() onTap}) {
     return Material(
-        elevation: 14.0,
+        elevation: 5.0,
         borderRadius: BorderRadius.circular(12.0),
         shadowColor: Color(0x802196F3),
         child: InkWell

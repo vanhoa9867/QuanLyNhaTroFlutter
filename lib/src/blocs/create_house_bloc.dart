@@ -48,6 +48,9 @@ class CreateHouseBloc{
   void createHouse(String name, String address, String number, String note, Function onSuccess, Function(String)onRegisterError){
     _firAuthHouse.createHouse(name, address, number, note, onSuccess, onRegisterError);
   }
+  void updateRoom(String name,String price,String roomId, Function onSuccess){
+    _firAuthHouse.updateRoom(name, price, roomId, onSuccess);
+  }
 
   void dispose(){
     _nameHouseController.close();
